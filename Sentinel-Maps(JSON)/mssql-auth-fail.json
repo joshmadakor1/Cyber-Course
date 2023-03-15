@@ -1,0 +1,33 @@
+{
+  "type": 3,
+  "content": {
+    "version": "KqlItem/1.0",
+    "query": "let GeoIPDB = _GetWatchlist(\"geo_ipv4\");\nlet GeoIPDB_cities = _GetWatchlist(\"geo_ipv4_cities\");\nlet GeoIPDB_FULL = GeoIPDB | join kind = leftouter GeoIPDB_cities on geoname_id;\nlet IpAddress_REGEX_PATTERN = @\"\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b\";\n// Brute Force Attempt MS SQL Server\nEvent\n| where EventLog == \"Application\"\n| where EventID == 18456\n| project TimeGenerated, AttackerIP = extract(IpAddress_REGEX_PATTERN, 0, RenderedDescription), DestinationHostName = Computer, RenderedDescription\n| evaluate ipv4_lookup(GeoIPDB_FULL, AttackerIP, network)\n| project TimeGenerated, AttackerIP, DestinationHostName, RenderedDescription, latitude, longitude, subdivision = subdivision_1_name, city = city_name, country = country_name, friendly_location = strcat(city_name, \" (\", country_name, \")\");",
+    "size": 3,
+    "timeContext": {
+      "durationMs": 2592000000
+    },
+    "queryType": 0,
+    "resourceType": "microsoft.operationalinsights/workspaces",
+    "visualization": "map",
+    "mapSettings": {
+      "locInfo": "LatLong",
+      "locInfoColumn": "country_name",
+      "latitude": "latitude",
+      "longitude": "longitude",
+      "sizeSettings": "latitude",
+      "sizeAggregation": "Count",
+      "opacity": 0.8,
+      "labelSettings": "friendly_location",
+      "legendMetric": "friendly_location",
+      "legendAggregation": "Count",
+      "itemColorSettings": {
+        "nodeColorField": "latitude",
+        "colorAggregation": "Sum",
+        "type": "heatmap",
+        "heatmapPalette": "greenRed"
+      }
+    }
+  },
+  "name": "query - 0"
+}

@@ -1,0 +1,33 @@
+{
+  "type": 3,
+  "content": {
+    "version": "KqlItem/1.0",
+    "query": "let GeoIPDB = _GetWatchlist(\"geo_ipv4\");\nlet GeoIPDB_cities = _GetWatchlist(\"geo_ipv4_cities\");\nlet GeoIPDB_FULL = GeoIPDB | join kind = leftouter GeoIPDB_cities on geoname_id;\nlet MaliciousFlows = AzureNetworkAnalytics_CL \n| where FlowType_s == \"MaliciousFlow\"\n| project TimeGenerated, FlowType = FlowType_s, IpAddress = SrcIP_s, DestinationIpAddress = DestIP_s, DestinationPort = DestPort_d, Protocol = L7Protocol_s, NSGRuleMatched = NSGRules_s;\nMaliciousFlows\n| evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network)\n| project TimeGenerated, FlowType, IpAddress, DestinationIpAddress, DestinationPort, Protocol, NSGRuleMatched, latitude, longitude, subdivision = subdivision_1_name, city = city_name, country = country_name, friendly_location = strcat(city_name, \" (\", country_name, \")\")",
+    "size": 3,
+    "timeContext": {
+      "durationMs": 2592000000
+    },
+    "queryType": 0,
+    "resourceType": "microsoft.operationalinsights/workspaces",
+    "visualization": "map",
+    "mapSettings": {
+      "locInfo": "LatLong",
+      "locInfoColumn": "country_name",
+      "latitude": "latitude",
+      "longitude": "longitude",
+      "sizeSettings": "city",
+      "sizeAggregation": "Count",
+      "opacity": 0.8,
+      "labelSettings": "friendly_location",
+      "legendMetric": "IpAddress",
+      "legendAggregation": "Count",
+      "itemColorSettings": {
+        "nodeColorField": "city",
+        "colorAggregation": "Count",
+        "type": "heatmap",
+        "heatmapPalette": "greenRed"
+      }
+    }
+  },
+  "name": "query - 0"
+}

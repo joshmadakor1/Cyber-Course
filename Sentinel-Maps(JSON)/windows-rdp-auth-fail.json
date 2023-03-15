@@ -1,0 +1,33 @@
+{
+  "type": 3,
+  "content": {
+    "version": "KqlItem/1.0",
+    "query": "let GeoIPDB = _GetWatchlist(\"geo_ipv4\");\nlet GeoIPDB_cities = _GetWatchlist(\"geo_ipv4_cities\");\nlet GeoIPDB_FULL = GeoIPDB | join kind = leftouter GeoIPDB_cities on geoname_id;\nlet WindowsEvents = SecurityEvent;\nWindowsEvents | where EventID == 4625\n| evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network)\n| project TimeGenerated, Account, AccountType, Computer, EventID, Activity, IpAddress, LogonTypeName, network, latitude, longitude, subdivision = subdivision_1_name, city = city_name, country = country_name, friendly_location = strcat(city_name, \" (\", country_name, \")\");\n",
+    "size": 3,
+    "timeContext": {
+      "durationMs": 2592000000
+    },
+    "queryType": 0,
+    "resourceType": "microsoft.operationalinsights/workspaces",
+    "visualization": "map",
+    "mapSettings": {
+      "locInfo": "LatLong",
+      "locInfoColumn": "country_name",
+      "latitude": "latitude",
+      "longitude": "longitude",
+      "sizeSettings": "EventID",
+      "sizeAggregation": "Count",
+      "opacity": 0.8,
+      "labelSettings": "friendly_location",
+      "legendMetric": "EventID",
+      "legendAggregation": "Count",
+      "itemColorSettings": {
+        "nodeColorField": "EventID",
+        "colorAggregation": "Sum",
+        "type": "heatmap",
+        "heatmapPalette": "greenRed"
+      }
+    }
+  },
+  "name": "query - 0"
+}
