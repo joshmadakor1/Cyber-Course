@@ -97,7 +97,7 @@
                 "description": "",
                 "severity": "Medium",
                 "enabled": true,
-                "query": "// Failed access attempts\nAzureDiagnostics\n| where ResourceProvider == \"MICROSOFT.KEYVAULT\" \n| where ResultSignature == \"Unauthorized\"\n\n",
+                "query": "// Failed access attempts\nAzureDiagnostics\n| where ResourceProvider == \"MICROSOFT.KEYVAULT\" \n| where ResultSignature == \"Forbidden\"\n\n",
                 "queryFrequency": "PT5M",
                 "queryPeriod": "PT5H",
                 "triggerOperator": "GreaterThan",
