@@ -1,6 +1,5 @@
-# Project Title
-
-Building a SOC + Mini Honeynet in Azure with Log Analytics and Microsoft Sentinel
+# Building a SOC + Honeynet in Azure with (Live Malicious Traffic)
+![Cloud Honeynet / SOC](https://i.imgur.com/ZWxe03e.jpg)
 
 ## Introduction
 
@@ -12,14 +11,11 @@ In this project, I build a mini honeynet in Azure and ingest log sources from va
 - SecurityIncident (Incidents created by Sentinel)
 - AzureNetworkAnalytics_CL (Malicious Flows allowed into our honeynet)
 
-## Architecture 
-### Architecture Before Hardening / Security Controls
-![Architecture Diagram](/images/architecture-diagram.png)
-###### [https://app.diagrams.net/](https://app.diagrams.net/)
+## Architecture Before Hardening / Security Controls
+![Architecture Diagram](https://i.imgur.com/aBDwnKb.jpg)
 
-### Architecture After Hardening / Security Controls
-![Architecture Diagram](/images/architecture-diagram.png)
-###### [https://app.diagrams.net/](https://app.diagrams.net/)
+## Architecture After Hardening / Security Controls
+![Architecture Diagram](https://i.imgur.com/YQNa9Pp.jpg)
 
 The architecture of the mini honeynet in Azure consists of the following components:
 
@@ -36,11 +32,9 @@ For the "BEFORE" metrics, all resources were originally deployed, exposed to the
 For the "AFTER" metrics, Network Security Groups were hardened by blocking ALL traffic with the exception of my admin workstation, and all other resources were protected by their built-in firewalls as well as Private Endpoint
 
 ## Attack Maps Before Hardening / Security Controls
-
-![Architecture Diagram](/images/architecture-diagram.png)<br>
-![Architecture Diagram](/images/architecture-diagram.png)<br>
-![Architecture Diagram](/images/architecture-diagram.png)<br>
-![Architecture Diagram](/images/architecture-diagram.png)<br>
+![NSG Allowed Inbound Malicious Flows](https://i.imgur.com/1qvswSX.png)<br>
+![Linux Syslog Auth Failures](https://i.imgur.com/G1YgZt6.png)<br>
+![Windows RDP/SMB Auth Failures](https://i.imgur.com/ESr9Dlv.png)<br>
 
 ## Metrics Before Hardening / Security Controls
 
@@ -58,7 +52,7 @@ Stop Time 2023-03-16 17:04:29
 
 ## Attack Maps Before Hardening / Security Controls
 
-_All map queries actually returned no results due to no instances of malicious activity for the 24 hour period after hardening._
+```All map queries actually returned no results due to no instances of malicious activity for the 24 hour period after hardening.```
 
 ## Metrics After Hardening / Security Controls
 
