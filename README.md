@@ -12,12 +12,14 @@ In this project, I build a mini honeynet in Azure and ingest log sources from va
 - SecurityIncident (Incidents created by Sentinel)
 - AzureNetworkAnalytics_CL (Malicious Flows allowed into our honeynet)
 
-## Architecture [https://app.diagrams.net/](https://app.diagrams.net/)
+## Architecture 
 ### Architecture Before Hardening / Security Controls
 ![Architecture Diagram](/images/architecture-diagram.png)
+###### [https://app.diagrams.net/](https://app.diagrams.net/)
 
 ### Architecture After Hardening / Security Controls
 ![Architecture Diagram](/images/architecture-diagram.png)
+###### [https://app.diagrams.net/](https://app.diagrams.net/)
 
 The architecture of the mini honeynet in Azure consists of the following components:
 
