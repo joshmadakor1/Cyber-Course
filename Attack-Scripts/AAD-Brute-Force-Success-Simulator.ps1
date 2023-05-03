@@ -21,6 +21,7 @@ if ((Get-AzContext) -eq $true) {
 $count = 0
 
 while ($count -le $max_attempts) {
+    Start-Sleep -Seconds 1
     $count++
     try {
         $securePassword = ConvertTo-SecureString $wrong_password -AsPlainText -Force
