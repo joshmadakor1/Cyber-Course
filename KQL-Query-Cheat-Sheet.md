@@ -33,6 +33,19 @@ SuccessfulLogons
 | project AuthenticationSuccessTime, AttackerIP, DestinationHostName, FailureCount, SuccessfulCount
 ```
 
+# Windows Security Event Log (Malware & Firewall)
+```
+// Malware Detection
+Event
+| where EventLog == "Microsoft-Windows-Windows Defender/Operational"
+| where EventID == "1116" or EventID == "1117"
+
+// Firewall Tamper Detection
+Event
+| where EventLog == "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall"
+| where EventID == 2003
+```
+
 # Linux Syslog
 
 ```
