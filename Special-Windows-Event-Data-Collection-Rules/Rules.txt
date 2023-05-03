@@ -1,0 +1,5 @@
+// Windows Defender Malware Detection XPath Query
+Microsoft-Windows-Windows Defender/Operational!*[System[(EventID=1116 or EventID=1117)]]
+
+// Windows Firewall Tampering Detection XPath Query
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall!*[System[(EventID=2003)]]
