@@ -104,7 +104,8 @@ SigninLogs
 // View Global Administrator Assignment
 AuditLogs
 | where OperationName == "Add member to role" and Result == "success"
-| where TargetResources[0].modifiedProperties[1].newValue == '"Company Administrator"' and TargetResources[0].type == "User"
+| where TargetResources[0].modifiedProperties[1].newValue == '"Global Administrator"' or TargetResources[0].modifiedProperties[1].newValue == '"Company Administrator"' 
+| order by TimeGenerated desc
 | project TimeGenerated, OperationName, AssignedRole = TargetResources[0].modifiedProperties[1].newValue, Status = Result, TargetResources
 
 // View Password Activities
@@ -127,12 +128,6 @@ let BruteForceSuccesses = SuccessfulLogons
 | join kind = fullouter FailedLogons on AttackerIP, UserPrincipalName;
 BruteForceSuccesses
 | project AttackerIP, TargetAccount = UserPrincipalName, UserId, FailureCount, SuccessCount, AuthenticationSuccessTime
-
-// Global Administrator Assignment
-AuditLogs
-| where OperationName == "Add member to role" and Result == "success"
-| where TargetResources[0].modifiedProperties[1].newValue == '"Company Administrator"' and TargetResources[0].type == "User"
-| project TimeGenerated, OperationName, AssignedRole = TargetResources[0].modifiedProperties[1].newValue, InitiatorId = InitiatedBy.user.id, InitiatorUpn = InitiatedBy.user.userPrincipalName, TargetAccountId = TargetResources[0].id, TargetAccountUpn = TargetResources[0].userPrincipalName, InitiatorIpAddress = InitiatedBy.user.ipAddress, Status = Result
 
 // Excessive password Resets
 AuditLogs
