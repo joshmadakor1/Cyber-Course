@@ -125,7 +125,7 @@ let SuccessfulLogons = SigninLogs
 | project TimeGenerated, Status = Status.errorCode, UserPrincipalName, UserId, UserDisplayName, AppDisplayName, AttackerIP = IPAddress, IPAddressFromResourceProvider, City = LocationDetails.city, State = LocationDetails.state, Country = LocationDetails.country, Latitude = LocationDetails.geoCoordinates.latitude, Longitude = LocationDetails.geoCoordinates.longitude
 | summarize SuccessCount = count() by AuthenticationSuccessTime = TimeGenerated, AttackerIP, UserPrincipalName, UserId, UserDisplayName;
 let BruteForceSuccesses = SuccessfulLogons
-| join kind = fullouter FailedLogons on AttackerIP, UserPrincipalName;
+| join kind = leftouter FailedLogons on AttackerIP, UserPrincipalName;
 BruteForceSuccesses
 | project AttackerIP, TargetAccount = UserPrincipalName, UserId, FailureCount, SuccessCount, AuthenticationSuccessTime
 
