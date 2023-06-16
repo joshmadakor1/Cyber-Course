@@ -7,11 +7,6 @@ $correct_password = "Cyberlab123!" # Enter the correct password for the above us
 $wrong_password = "___WRONG PASSWORD___" # This is used to generate auth failures
 $max_attempts = 11 # This is the number of times to fail the login before succeeding
 
-# Install the Azure Module if it doesn't exist
-if ((Get-Module -Name Az) -eq $false) {
-    Install-Module -Name Az
-}
-
 # Disconnect from AAD if already connected; we want to try to authenticate
 if ((Get-AzContext) -eq $true) {
     Disconnect-AzAccount
