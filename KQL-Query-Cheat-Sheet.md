@@ -89,6 +89,20 @@ let SuccessfulLogons = Syslog
 let BruteForceSuccesses = SuccessfulLogons
 | join kind = leftouter FailedLogons on AttackerIP, DestinationHostName;
 BruteForceSuccesses
+
+// Queries the linux syslog for any user accounts created
+// By @slendymayne (Discord)
+Syslog
+| where Facility == "authpriv" and SeverityLevel == "info"
+| where SyslogMessage contains "new user" and SyslogMessage contains "shell=/bin/bash"
+| project TimeGenerated, HostIP, HostName, ProcessID, SyslogMessage
+
+// Queries for any users given sudo privileges
+// By @slendymayne (Discord)
+Syslog
+| where Facility == "authpriv" and SeverityLevel == "info"
+| where SyslogMessage contains "to group 'sudo'"
+| project TimeGenerated, HostIP, Computer, ProcessID, SyslogMessage
 ```
 
 # Azure Active Directory
