@@ -2,7 +2,7 @@ import openai
 import time
 import csv
 
-ChatGPT_API_KEY = "zxxx" # https://platform.openai.com/api-keys)
+ChatGPT_API_KEY = "xxxxxxxxxxxxxxxxxxxx" # https://platform.openai.com/api-keys)
 GPT_MODEL = "gpt-4-0125-preview" # API Models: https://platform.openai.com/docs/models/continuous-model-upgrades
 
 def get_csv_contents(file_path):
